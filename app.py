@@ -10,8 +10,10 @@ def index():
 @app.route('/why')
 def about():
     words = ['cause', 'we', 'can']
-    return render_template("about.html", words=words)
+    title = "Why?"
+    return render_template("about.html", title = title, words=words)
 
 @app.route('/cute-image')
 def cute():
-    return render_template("cute.html")
+    title = "So cute"
+    return render_template("cute.html", title=title)
