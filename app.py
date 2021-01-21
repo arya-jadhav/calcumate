@@ -1,7 +1,8 @@
 from flask import Flask, render_template, request, redirect
-import smtplib
+#import smtplib
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
+from matrix_op import calc_determinant, calc_multiply
 # source virtual/Scripts/activate
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///friends.db'
@@ -53,11 +54,28 @@ def form():
 
     if not (first_name and last_name and message and email):
         error_msg = "Please fill in all fields."
-        return render_template("fail.html", error_msg=error_msg,       #fail is not an actual webpage, it is still a part of /form
+        return render_template("talk.html", error_msg=error_msg,
                                 first_name=first_name,
                                 last_name=last_name,
                                 email=email,
                                 message=message)
+
+    title = "Thank you :)"
+    return render_template("form.html", title=title, first_name=first_name, last_name=last_name, email=email, message=message)
+# @app.route('/form', methods=["POST"])
+# def form():
+#     first_name = request.form.get("first_name")
+#     last_name = request.form.get("last_name")
+#     email = request.form.get("email")
+#     message = request.form.get("message")
+#
+#     if not (first_name and last_name and message and email):
+#         error_msg = "Please fill in all fields."
+#         return render_template("fail.html", error_msg=error_msg,       #fail is not an actual webpage, it is still a part of /form
+#                                 first_name=first_name,
+#                                 last_name=last_name,
+#                                 email=email,
+#                                 message=message)
 
     title = "Thank you :)"
     return render_template("form.html", title=title, first_name=first_name, last_name=last_name, email=email, message=message)
@@ -103,3 +121,32 @@ def delete(id):
         return redirect('/friends')
     except:
         return"There was a problem deleting that friend"
+
+#########################design determinant page################################
+
+@app.route('/determinant')
+def determinant():
+    title="Determinant"
+    return render_template("determinant.html", title=title)
+
+@app.route('/generate-matrix', methods=["POST"])
+def generate():
+    size = int(request.form.get("size"))
+    title="Determinant"
+    return render_template('determinant.html', size=size, title=title)
+
+@app.route('/solution/<int:size>', methods=["POST"])
+def solution(size):
+    matrix = [0]*(size)
+    for i in range(size):
+        matrix[i] = [0] * (size)
+    num=1
+    for i in range(size):
+        for j in range(size):
+            matrix[i][j] = int(request.form.get("box"+str(num)))
+            num += 1
+
+    sol = calc_determinant(matrix)
+    return render_template('determinant.html',sol=sol)
+
+##########################design multiply page##################################

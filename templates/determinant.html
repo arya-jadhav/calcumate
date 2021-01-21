@@ -1,0 +1,46 @@
+{% extends 'base.html'%}
+
+{% block content %}
+<div class="container">
+  <h4>Enter dimensions</h4>
+  <br><br>
+  <form action="/generate-matrix" method="post">
+
+    <input type="number" name="size" min=0 value={{size}}>
+    <input type="submit" value="Generate" class='btn btn-secondary'>
+
+  </form>
+
+  <br><br>
+
+
+  {%if size %}
+
+    {% set counter = {'i':1} %}
+    {% macro increment(dct, key, inc=1)%}
+      {% if dct.update({key: dct[key] + inc}) %} {% endif %}
+    {% endmacro %}
+
+    <form action="/solution/{{size}}" method="post">
+
+        {% for _ in range(size) %}
+            {% for i in range(size) %}
+              <input type="text" name="box{{counter['i']}}"" >
+              {{ increment(counter, 'i') }}
+            {%endfor%}
+            <br>
+        {%endfor%}
+        <input type="submit" value="Solve" class='btn btn-secondary'>
+
+     </form>
+
+  {%endif%}
+
+  {% if sol %}
+        <br>
+        <h4>The determinant is: </h4>
+        {{sol}}
+  {% endif %}
+</div>
+
+{% endblock %}

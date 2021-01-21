@@ -2,31 +2,42 @@
 
 {% block content %}
     <div class="container">
+      {% if error_msg %}
+      <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        {{error_msg}}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+      {% endif %}
       <h1>Hi there!</h1>
       <br><br>
 
-  <form action="/form" method="POST">
-  <div class="mb-3">
-    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="First Name" name="first_name">
+      <form action="/form" method="POST">
+      <div class="mb-3">
+        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+         placeholder="First Name" name="first_name" value={{first_name}}>
 
-  </div>
+      </div>
 
-  <div class="mb-3">
-    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Last Name" name="last_name">
-  </div>
+      <div class="mb-3">
+        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+        placeholder="Last Name" name="last_name" value={{last_name}}>
 
-  <div class="mb-3">
-    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Email Address" name="email_address">
-  </div>
+      </div>
 
-  <div id="emailHelp" class="form-text"><h5>What is on your mind at this very moment?</h5></div>
+      <div class="mb-3">
+        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+        placeholder="Email Address" name="email_address" value={{email}}>
+      </div>
+      <div id="emailHelp" class="form-text"><h5>What is on your mind at this very moment?</h5></div>
 
-  <div class="mb-3">
-    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Message" name="message">
-  </div>
-  <br>
+      <div class="mb-3">
+        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+        placeholder="Message" name="message" value={{message}}>
+      </div>
+      <br>
 
-  <button type="submit" class="btn btn-primary">Submit</button>
-</form>
+      <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+
     </div>
 {% endblock %}
